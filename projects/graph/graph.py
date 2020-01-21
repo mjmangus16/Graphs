@@ -15,7 +15,7 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex] = set()
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
@@ -72,20 +72,30 @@ class Graph:
             # If that vertex has not been visited...
             if v not in visited:
                 # Mark it as visited
-                print(v)
+                print("dft", v)
                 visited.add(v)
                 # Then add all of its neighbors to the back of the stack
                 for neighbor in self.vertices[v]:
                     s.push(neighbor)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, s=Stack(), visited=set()):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        if starting_vertex is not None:
+            s.push(starting_vertex)
+
+        if s.size() > 0:
+            v = s.pop()
+            if v not in visited:
+                print("dft-r", v)
+                visited.add(v)
+                for neighbor in self.vertices[v]:
+                    s.push(neighbor)
+            self.dft_recursive(None, s, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -186,12 +196,12 @@ if __name__ == '__main__':
     Valid BFS path:
         [1, 2, 4, 6]
     '''
-    print(graph.bfs(1, 6))
+    # print(graph.bfs(1, 6))
 
     '''
     Valid DFS paths:
         [1, 2, 4, 6]
         [1, 2, 4, 7, 6]
     '''
-    print(graph.dfs(1, 6))
-    print(graph.dfs_recursive(1, 6))
+    # print(graph.dfs(1, 6))
+    # print(graph.dfs_recursive(1, 6))
